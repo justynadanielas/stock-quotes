@@ -7,6 +7,8 @@ import { QuotesModule } from './quotes/quotes.module';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Quote } from './quotes/entities/quote.entity';
+import { InstrumentsModule } from './instruments/instruments.module';
+import { Instrument } from './instruments/entities/instrument.entity';
 
 
 @Module({
@@ -17,10 +19,11 @@ import { Quote } from './quotes/entities/quote.entity';
   TypeOrmModule.forRoot({
     type: 'sqlite',
     database: ':memory:',
-    entities: [Quote],  
+    entities: [Quote, Instrument],  
     synchronize: true,
   }),
-  QuotesModule],
+  QuotesModule,
+  InstrumentsModule],
   controllers: [AppController],
   providers: [AppService],
 })

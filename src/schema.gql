@@ -1,0 +1,37 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Quote {
+  id: Int!
+  time_stamp: String!
+  price: Int!
+}
+
+type Instrument {
+  id: Int!
+  ticker_name: String!
+  company_name: String!
+}
+
+type Query {
+  quotes: [Quote!]!
+  quote(id: Int!): Quote!
+  instruments: [Instrument!]!
+  instrument(id: Int!): Instrument!
+}
+
+type Mutation {
+  createQuote(createQuoteInput: CreateQuoteInput!): Quote!
+  createInstrument(createInstrumentInput: CreateInstrumentInput!): Instrument!
+}
+
+input CreateQuoteInput {
+  time_stamp: String!
+  price: Int!
+}
+
+input CreateInstrumentInput {
+  ticker_name: String!
+  company_name: String!
+}
