@@ -6,6 +6,6 @@ export class CreateInstrumentInput {
   @Field()
   ticker_name: string;
 
-  @Field()
-  company_name: string;
+  // @Field()
+  // company_name: string;
 }

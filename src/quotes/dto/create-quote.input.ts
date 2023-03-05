@@ -8,4 +8,8 @@ export class CreateQuoteInput {
 
   @Field(type => Int)
   price: number;
+
+  @Field(type => Int)
+  intrumentId: number;
+  
 }

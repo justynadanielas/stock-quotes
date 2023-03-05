@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Instrument } from 'src/instruments/entities/instrument.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -15,4 +16,12 @@ export class Quote {
   @Column()
   @Field(type => Int)
   price: number;
+
+  @Column()
+  @Field(type => Int)
+  intrumentId: number;
+
+  @ManyToOne(() => Instrument, instrument => instrument.quotes)
+  @Field(type => Instrument)
+  instrument: Instrument
 }

@@ -6,12 +6,14 @@ type Quote {
   id: Int!
   time_stamp: String!
   price: Int!
+  intrumentId: Int!
+  instrument: Instrument!
 }
 
 type Instrument {
   id: Int!
   ticker_name: String!
-  company_name: String!
+  quotes: [Quote!]
 }
 
 type Query {
@@ -29,9 +31,9 @@ type Mutation {
 input CreateQuoteInput {
   time_stamp: String!
   price: Int!
+  intrumentId: Int!
 }
 
 input CreateInstrumentInput {
   ticker_name: String!
-  company_name: String!
 }

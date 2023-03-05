@@ -6,6 +6,7 @@ import { Instrument } from './entities/instrument.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Instrument])],
-  providers: [InstrumentsResolver, InstrumentsService]
+  providers: [InstrumentsResolver, InstrumentsService],
+  exports: [InstrumentsService]
 })
 export class InstrumentsModule {}

@@ -1,8 +1,9 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
 import { QuotesService } from './quotes.service';
 import { Quote } from './entities/quote.entity';
 import { CreateQuoteInput } from './dto/create-quote.input';
 import { UpdateQuoteInput } from './dto/update-quote.input';
+import { Instrument } from 'src/instruments/entities/instrument.entity';
 
 @Resolver(() => Quote)
 export class QuotesResolver {
@@ -19,8 +20,13 @@ export class QuotesResolver {
   }
 
   @Query(() => Quote, { name: 'quote' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Quote> {
     return this.quotesService.findOne(id);
+  }
+
+  @ResolveField(returns => Instrument)
+  instrument(@Parent() quote: Quote): Promise<Instrument> {
+    return this.quotesService.getInstrument(quote.intrumentId);
   }
 
   // @Mutation(() => Quote)
