@@ -9,12 +9,12 @@ export class QuotesResolver {
   constructor(private readonly quotesService: QuotesService) {}
 
   @Mutation(() => Quote)
-  createQuote(@Args('createQuoteInput') createQuoteInput: CreateQuoteInput) {
+  createQuote(@Args('createQuoteInput') createQuoteInput: CreateQuoteInput): Promise<Quote> {
     return this.quotesService.create(createQuoteInput);
   }
 
   @Query(() => [Quote], { name: 'quotes' })
-  findAll() {
+  findAll(): Promise<Quote[]> {
     return this.quotesService.findAll();
   }
 
@@ -23,13 +23,13 @@ export class QuotesResolver {
     return this.quotesService.findOne(id);
   }
 
-  @Mutation(() => Quote)
-  updateQuote(@Args('updateQuoteInput') updateQuoteInput: UpdateQuoteInput) {
-    return this.quotesService.update(updateQuoteInput.id, updateQuoteInput);
-  }
+  // @Mutation(() => Quote)
+  // updateQuote(@Args('updateQuoteInput') updateQuoteInput: UpdateQuoteInput) {
+  //   return this.quotesService.update(updateQuoteInput.id, updateQuoteInput);
+  // }
 
-  @Mutation(() => Quote)
-  removeQuote(@Args('id', { type: () => Int }) id: number) {
-    return this.quotesService.remove(id);
-  }
+  // @Mutation(() => Quote)
+  // removeQuote(@Args('id', { type: () => Int }) id: number) {
+  //   return this.quotesService.remove(id);
+  // }
 }
