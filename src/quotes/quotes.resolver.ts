@@ -4,14 +4,45 @@ import { Quote } from './entities/quote.entity';
 import { CreateQuoteInput } from './dto/create-quote.input';
 import { UpdateQuoteInput } from './dto/update-quote.input';
 import { Instrument } from 'src/instruments/entities/instrument.entity';
+import { InstrumentsService } from 'src/instruments/instruments.service';
+import { forwardRef, Inject } from '@nestjs/common';
+import { CreateQuoteInputWithTicker } from './dto/create-quote-with-ticker.input';
+import { CreateInstrumentInput } from 'src/instruments/dto/create-instrument.input';
 
 @Resolver(() => Quote)
 export class QuotesResolver {
-  constructor(private readonly quotesService: QuotesService) {}
+  constructor(
+    @Inject(forwardRef(() => InstrumentsService)) private instrumentsService: InstrumentsService,
+    private readonly quotesService: QuotesService) {}
 
   @Mutation(() => Quote)
   createQuote(@Args('createQuoteInput') createQuoteInput: CreateQuoteInput): Promise<Quote> {
     return this.quotesService.create(createQuoteInput);
+  }
+
+  @Mutation(() => Quote)
+  async createQuoteWithTicker(@Args('createQuoteInputWithTicker') createQuoteWithTicker: CreateQuoteInputWithTicker): Promise<Quote> {
+    let instrument = await this.instrumentsService.findOneByName(createQuoteWithTicker.intrumentTickerName);
+
+    if(instrument){
+      let instrument_id = instrument.id;
+      let quote_input: CreateQuoteInput = {
+        time_stamp: createQuoteWithTicker.time_stamp,
+        price: createQuoteWithTicker.price,
+        intrumentId: instrument_id
+      }
+      return this.quotesService.create(quote_input);
+    } else {
+      instrument = await this.instrumentsService.create({
+        ticker_name: createQuoteWithTicker.intrumentTickerName,
+      })
+      let quote_input: CreateQuoteInput = {
+        time_stamp: createQuoteWithTicker.time_stamp,
+        price: createQuoteWithTicker.price,
+        intrumentId: instrument.id
+      }
+      return this.quotesService.create(quote_input)
+    }
   }
 
   @Query(() => [Quote], { name: 'quotes' })

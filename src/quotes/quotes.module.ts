@@ -7,6 +7,7 @@ import { InstrumentsModule } from 'src/instruments/instruments.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Quote]), InstrumentsModule],
-  providers: [QuotesResolver, QuotesService]
+  providers: [QuotesResolver, QuotesService],
+  // exports: [QuotesService]
 })
 export class QuotesModule {}

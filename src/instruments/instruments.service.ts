@@ -23,6 +23,10 @@ export class InstrumentsService {
     return this.instrumentsRepository.findOneByOrFail({id: id});
   }
 
+  async findOneByName(ticker_name: string): Promise<Instrument> {
+    return this.instrumentsRepository.findOneBy({ticker_name: ticker_name});
+  }
+
   // update(id: number, updateInstrumentInput: UpdateInstrumentInput) {
   //   return `This action updates a #${id} instrument`;
   // }

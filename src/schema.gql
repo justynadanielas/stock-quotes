@@ -25,6 +25,7 @@ type Query {
 
 type Mutation {
   createQuote(createQuoteInput: CreateQuoteInput!): Quote!
+  createQuoteWithTicker(createQuoteInputWithTicker: CreateQuoteInputWithTicker!): Quote!
   createInstrument(createInstrumentInput: CreateInstrumentInput!): Instrument!
 }
 
@@ -32,6 +33,12 @@ input CreateQuoteInput {
   time_stamp: String!
   price: Int!
   intrumentId: Int!
+}
+
+input CreateQuoteInputWithTicker {
+  time_stamp: String!
+  price: Int!
+  intrumentTickerName: String!
 }
 
 input CreateInstrumentInput {
