@@ -5,10 +5,14 @@ import { InstrumentsService } from './instruments.service';
 describe('InstrumentsResolver', () => {
   let resolver: InstrumentsResolver;
 
+  const mockInstrumentsService = {
+
+  }
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [InstrumentsResolver, InstrumentsService],
-    }).compile();
+    }).overrideProvider(InstrumentsService).useValue(mockInstrumentsService).compile();
 
     resolver = module.get<InstrumentsResolver>(InstrumentsResolver);
   });
@@ -16,4 +20,5 @@ describe('InstrumentsResolver', () => {
   it('should be defined', () => {
     expect(resolver).toBeDefined();
   });
+
 });

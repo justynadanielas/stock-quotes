@@ -9,7 +9,8 @@ import { Quote } from './entities/quote.entity';
 
 @Injectable()
 export class QuotesService {
-  constructor(@InjectRepository(Quote) private quotesRepository: Repository<Quote>, private instrumentService: InstrumentsService) {}
+  constructor(@InjectRepository(Quote) private quotesRepository: Repository<Quote>, 
+    private instrumentService: InstrumentsService) {}
 
   async create(createQuoteInput: CreateQuoteInput): Promise<Quote> {
     const newQuote = this.quotesRepository.create(createQuoteInput);
