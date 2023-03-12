@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Instrument } from 'src/instruments/entities/instrument.entity';
+import { Instrument } from '../../instruments/entities/instrument.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

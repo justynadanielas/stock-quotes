@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { InstrumentsService } from '../instruments/instruments.service';
 import { QuotesResolver } from './quotes.resolver';
 import { QuotesService } from './quotes.service';
 

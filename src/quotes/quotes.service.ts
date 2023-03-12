@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Instrument } from 'src/instruments/entities/instrument.entity';
-import { InstrumentsService } from 'src/instruments/instruments.service';
+import { InstrumentsService } from '../instruments/instruments.service';
 import { Repository } from 'typeorm';
 import { CreateQuoteInput } from './dto/create-quote.input';
 import { UpdateQuoteInput } from './dto/update-quote.input';
