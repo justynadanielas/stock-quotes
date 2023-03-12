@@ -6,6 +6,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Redirect("graphql")
-  goToPlayground() {}
+  @Redirect()
+  goToPlayground() {
+    return { url: "graphql" };
+  }
 }
