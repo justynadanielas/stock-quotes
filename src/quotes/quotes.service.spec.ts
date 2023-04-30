@@ -64,7 +64,19 @@ describe('QuotesService', () => {
   const mockInstrumentsService = {
     findOne: jest.fn((id) => {
       return instruments[id];
-    })
+    }),
+
+    findOneByName: jest.fn(ticker_name => {
+      const result = instruments.find(el => el.ticker_name === ticker_name);
+      return Promise.resolve(result);
+    }),
+
+    create: jest.fn(instrumentInput => {
+      return Promise.resolve({
+        id: 1,
+        ...instrumentInput
+      })
+    }),
   }
 
   beforeEach(async () => {
@@ -92,6 +104,23 @@ describe('QuotesService', () => {
       price: 100,
       intrumentId: 1
     })
+  })
+
+  it('should handle race condition when creating a quote with same instrument ticker name', async () => {
+    const promises = [
+      service.createQuoteWithTicker({time_stamp: new Date().toISOString(), price: 100, intrumentTickerName: 'CCCC'}),
+      service.createQuoteWithTicker({time_stamp: new Date().toISOString(), price: 200, intrumentTickerName: 'CCCC'}),
+      service.createQuoteWithTicker({time_stamp: new Date().toISOString(), price: 300, intrumentTickerName: 'CCCC'}),
+      service.createQuoteWithTicker({time_stamp: new Date().toISOString(), price: 400, intrumentTickerName: 'CCCC'}),
+      service.createQuoteWithTicker({time_stamp: new Date().toISOString(), price: 500, intrumentTickerName: 'CCCC'}),
+    ];
+
+    const results = await Promise.all(promises);
+
+    expect(mockInstrumentsService.findOneByName).toHaveBeenCalledTimes(5);
+    expect(mockInstrumentsService.create).toHaveBeenCalledTimes(1);
+
+
   })
 
   it('should return all quotes', async () => {
