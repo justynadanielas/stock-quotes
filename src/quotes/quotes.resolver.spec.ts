@@ -4,6 +4,8 @@ import { InstrumentsService } from '../instruments/instruments.service';
 import { Quote } from './entities/quote.entity';
 import { QuotesResolver } from './quotes.resolver';
 import { QuotesService } from './quotes.service';
+import { CreateQuoteInput } from './dto/create-quote.input';
+import { CreateQuoteInputWithTicker } from './dto/create-quote-with-ticker.input';
 
 describe('QuotesResolver', () => {
   let resolver: QuotesResolver;
@@ -41,10 +43,19 @@ describe('QuotesResolver', () => {
   ]
 
   const mockQuotesService = {
-    create: jest.fn(quoteInput => {
+    create: jest.fn((quoteInput: CreateQuoteInput) => {
       return Promise.resolve({
         id: 1,
         ...quoteInput
+      })
+    }),
+
+    createQuoteWithTicker: jest.fn((quoteWithTickerInput: CreateQuoteInputWithTicker) => {
+      return Promise.resolve({
+        id: 1,
+        time_stamp: quoteWithTickerInput.time_stamp,
+        price: quoteWithTickerInput.price,
+        intrumentId: 1
       })
     }),
 

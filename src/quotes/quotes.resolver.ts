@@ -20,29 +20,34 @@ export class QuotesResolver {
     return this.quotesService.create(createQuoteInput);
   }
 
-  @Mutation(() => Quote)
-  async createQuoteWithTicker(@Args('createQuoteInputWithTicker') createQuoteWithTicker: CreateQuoteInputWithTicker): Promise<Quote> {
-    let instrument = await this.instrumentsService.findOneByName(createQuoteWithTicker.intrumentTickerName);
+  // @Mutation(() => Quote)
+  // async createQuoteWithTicker(@Args('createQuoteInputWithTicker') createQuoteWithTicker: CreateQuoteInputWithTicker): Promise<Quote> {
+  //   let instrument = await this.instrumentsService.findOneByName(createQuoteWithTicker.intrumentTickerName);
 
-    if(instrument){
-      let instrument_id = instrument.id;
-      let quote_input: CreateQuoteInput = {
-        time_stamp: createQuoteWithTicker.time_stamp,
-        price: createQuoteWithTicker.price,
-        intrumentId: instrument_id
-      }
-      return this.quotesService.create(quote_input);
-    } else {
-      instrument = await this.instrumentsService.create({
-        ticker_name: createQuoteWithTicker.intrumentTickerName,
-      })
-      let quote_input: CreateQuoteInput = {
-        time_stamp: createQuoteWithTicker.time_stamp,
-        price: createQuoteWithTicker.price,
-        intrumentId: instrument.id
-      }
-      return this.quotesService.create(quote_input)
-    }
+  //   if(instrument){
+  //     let instrument_id = instrument.id;
+  //     let quote_input: CreateQuoteInput = {
+  //       time_stamp: createQuoteWithTicker.time_stamp,
+  //       price: createQuoteWithTicker.price,
+  //       intrumentId: instrument_id
+  //     }
+  //     return this.quotesService.create(quote_input);
+  //   } else {
+  //     instrument = await this.instrumentsService.create({
+  //       ticker_name: createQuoteWithTicker.intrumentTickerName,
+  //     })
+  //     let quote_input: CreateQuoteInput = {
+  //       time_stamp: createQuoteWithTicker.time_stamp,
+  //       price: createQuoteWithTicker.price,
+  //       intrumentId: instrument.id
+  //     }
+  //     return this.quotesService.create(quote_input)
+  //   }
+  // }
+
+  @Mutation(() => Quote)
+  createQuoteWithTicker(@Args('createQuoteInputWithTicker') createQuoteWithTicker: CreateQuoteInputWithTicker): Promise<Quote> {
+    return this.quotesService.createQuoteWithTicker(createQuoteWithTicker);
   }
 
   @Query(() => [Quote], { name: 'quotes' })
